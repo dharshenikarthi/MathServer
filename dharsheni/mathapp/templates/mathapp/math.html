@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Power Calculator</title>
+</head>
+<body>
+    <h1>Power Calculator</h1>
+    <form method="POST" action="">
+        <label for="intensity">Intensity (I):</label>
+        <input type="number" id="intensity" name="intensity" value="{{intensity}}"><br><br>
+        <label for="resistance">Resistance (R):</label>
+        <input type="number" id="resistance" name="resistance" value="{{resistance}}"><br><br>
+        <input type="submit" value="Calculate Power" >
+        <p id="result">{{Power}}</p>
+    </form>
+</body>
+</html>
