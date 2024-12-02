@@ -38,65 +38,108 @@ math.html
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Power Calculator</title>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+<title>Power Of a Lamp Filament</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<style type="text/css">
+body {
+    background-color: rgb(0, 0, 0);
+}
+.edge {
+    width: 100%;
+    padding-top: 250px;
+    text-align: center;
+}
+.box {
+    display: inline-block;
+    border: thick dashed rgb(187, 9, 96);
+    width: 500px;
+    min-height: 300px;
+    font-size: 20px;
+    background-color: rgb(10, 248, 239);
+}
+.formelt {
+    color: black;
+    text-align: center;
+    margin-top: 7px;
+    margin-bottom: 6px;
+}
+h1 {
+    color: black;
+    padding-top: 20px;
+}
+</style>
 </head>
 <body>
-    <h1>Power Calculator</h1>
-    <form method="POST" action="">
-        <label for="intensity">Intensity (I):</label>
-        <input type="number" id="intensity" name="intensity" value="{{intensity}}"><br><br>
-        <label for="resistance">Resistance (R):</label>
-        <input type="number" id="resistance" name="resistance" value="{{resistance}}"><br><br>
-        <input type="submit" value="Calculate Power" >
-        <p id="result">{{Power}}</p>
-    </form>
+<div class="edge">
+    <div class="box">
+        <h1>power of a lamp filament </h1>
+        <h3>DHARSHENI K(24006589)</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="formelt">
+                Intensity: <input type="text" name="intensity" value="{{i}}">m<br/>
+            </div>
+            <div class="formelt">
+                Resistance: <input type="text" name="resistance" value="{{r}}">m<br/>
+            </div>
+            <div class="formelt">
+                <input type="submit" value="Calculate"><br/>
+            </div>
+            <div class="formelt">
+                Power: <input type="text" name="power" value="{{power}}">m<sup>2</sup><br/>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>
 
+views.py
 
-view.py
-
-from django.shortcuts import render 
-from django.views.decorators.csrf import csrf_exempt, csrf_protect
-
-@csrf_exempt
-def power(request): 
-    context={} 
-    context['Power'] = "" 
-    context['intensity'] = "" 
-    context['resistance'] = "" 
-    if request.method == 'POST': 
+from django.shortcuts import render
+def power(request):
+    context = {}
+    context['power'] = "0"
+    context['i'] = "0"
+    context['r'] = "0"
+    if request.method == 'POST':
         print("POST method is used")
-        i = request.POST.get('intensity','0')
-        r = request.POST.get('resistance','0')
-        print('request=',request) 
-        print('Intensity=',i) 
-        print('Resistance=',r) 
-        power = int(i) ** 2 * int(r) 
-        context['Power'] = "Power (P) = " + str(power) + " Watts" 
-        context['intensity'] = i
-        context['resistance'] = r 
-        print('Power=',power) 
-    return render(request,'mathapp/math.html',context)
+        print('request.POST:', request.POST)
+        i = request.POST.get('intensity', '0') 
+        r = request.POST.get('resistance', '0') 
+        print('intensity =', i)
+        print('resistance =', r)
+        power =  int(i) * int(i) * int(r)
+        context['power'] = power
+        context['i'] = i
+        context['r'] = r
+        print('Power =', power)
+    
+    return render(request, 'mathapp/math.html',context)
 
 
 urls.py
 
-from django.contrib import admin 
-from django.urls import path 
-from mathapp import views 
-urlpatterns = [ 
-    path('admin/', admin.site.urls), 
-    path('powerofbulb/',views.power,name="powerofbulb"),
-    path('',views.power,name="powerofbulbroot")
+from django.contrib import admin
+from django.urls import path
+from mathapp import views
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('power/',views.power,name="power"),
+    path('',views.power,name="power")
 ]
+
+
+
 ```
 
 ## SERVER SIDE PROCESSING:
-![alt text](<Screenshot 2024-11-26 210009.png>)
+![alt text](../B.png)
 
 ## HOMEPAGE:
-![alt text](<Screenshot 2024-11-26 205843.png>)
+![alt text](../A.png)
 
 ## RESULT:
 The program for performing server side processing is completed successfully.
